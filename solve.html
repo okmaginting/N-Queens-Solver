@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N-Queens Solution</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 id="solution-title">N-Queens Solution</h1>
+    <div id="board"></div>
+    <button onclick="prevSolution()">Previous</button>
+    <button onclick="nextSolution()">Next</button>
+    <button onclick="goBack()">Back</button>
+
+    <script src="script.js"></script>
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        let currentSolutionIndex = 0;
+        let solutions = [];
+
+        function prevSolution() {
+            if (currentSolutionIndex > 0) {
+                currentSolutionIndex--;
+                displaySolution(currentSolutionIndex);
+            }
+        }
+
+        function nextSolution() {
+            if (currentSolutionIndex < solutions.length - 1) {
+                currentSolutionIndex++;
+                displaySolution(currentSolutionIndex);
+            }
+        }
+
+        function displaySolution(index) {
+            const board = solutions[index];
+            printSolution(board);
+            document.getElementById('solution-title').innerText = `Solution ${index + 1} of ${solutions.length}`;
+        }
+
+        window.onload = () => {
+            const n = parseInt(getQueryParam('n'));
+            solutions = solveNQueens(n);
+            if (solutions.length > 0) {
+                displaySolution(currentSolutionIndex);
+            }
+        };
+    </script>
+</body>
+</html>
