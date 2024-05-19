@@ -3,18 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>N-Queens Setup</title>
+    <title>N-Queen Game</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <h1>N-Queens Problem Solver</h1>
-    <input type="number" id="n" min="4" value="8">
-    <button onclick="navigateToSolution()">Solve</button>
+    <div class="container mt-5">
+        <div class="card">
+            <h1 class="card-header text-center">N-Queen Game</h1>
+            <div class="card-body">
+                <div class="text-center">
+                    <a href="n-queen.html" class="btn btn-primary btn-lg mr-3">Play</a>
+                    <a href="solve.html" class="btn btn-success btn-lg mr-3">Solver</a>
+                    <button class="btn btn-danger btn-lg" onclick="quit()">Quit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        function navigateToSolution() {
-            const n = document.getElementById('n').value;
-            window.location.href = `solve.html?n=${n}`;
+        function quit() {
+            window.close();
         }
     </script>
 </body>
