@@ -6,22 +6,20 @@ $(document).ready(function () {
         const n = parseInt($('#queenNumber').val());
         if (n && n > 0) {
             solveNQueens(n);
+            window.location.href = 'solution.html';
         } else {
             alert('Please enter a valid number');
         }
     });
 });
 
+
 function solveNQueens(n) {
     solutions = [];
     currentSolution = 0;
     const board = new Array(n).fill(-1);
     placeQueens(board, 0);
-    if (solutions.length === 0) {
-        alert('No solutions found.');
-        return;
-    }
-    displaySolution();
+    localStorage.setItem('solutions', JSON.stringify(solutions));
 }
 
 function placeQueens(board, row) {
@@ -47,42 +45,4 @@ function isSafe(board, row, col) {
         }
     }
     return true;
-}
-
-function displaySolution() {
-    const n = solutions[0].length;
-    const solution = solutions[currentSolution];
-    const boardContainer = $('#boardContainer');
-    boardContainer.empty();
-    const board = $('<div>').addClass('board').css({
-        'grid-template-columns': `repeat(${n}, 50px)`,
-        'grid-template-rows': `repeat(${n}, 50px)`
-    });
-
-    for (let i = 0; i < n; i++) {
-        for (let j = 0; j < n; j++) {
-            const cell = $('<div>').addClass('cell').addClass((i + j) % 2 === 0 ? 'white' : 'black');
-            if (solution[i] === j) {
-                cell.addClass('queen').text('♛');
-            }
-            board.append(cell);
-        }
-    }
-
-    boardContainer.append(board);
-    $('#solutionNumber').text(`Solution number ${currentSolution + 1} of ${solutions.length}`);
-}
-
-function prevSolution() {
-    if (currentSolution > 0) {
-        currentSolution--;
-        displaySolution();
-    }
-}
-
-function nextSolution() {
-    if (currentSolution < solutions.length - 1) {
-        currentSolution++;
-        displaySolution();
-    }
 }

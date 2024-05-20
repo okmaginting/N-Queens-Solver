@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N-Queens Solution</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-dark">
+    <div class="container mt-5">
+        <h1 class="font-weight-bolder">DONT EAT THE QUEENS: THE ANSWER</h1>
+        <h5 id="solutionNumber" class="font-weight-bold"></h5>
+        <div id="boardContainer" class="mt-4 mb-3 d-flex justify-content-center"></div>
+        
+        <div class="text-center">
+            <button class="btn btn-btn btn-danger mr-4" onclick="prevSolution()"><< Previous </button>
+            <button class="btn btn btn-success" onclick="nextSolution()">Next >></button>
+        </div>
+        <div class="text-center mt-3">
+            <a href="solve.html" class="btn btn-primary">Change Number of Queens</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="solution.js"></script>
+</body>
+</html>

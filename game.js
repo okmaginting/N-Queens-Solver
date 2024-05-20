@@ -1,11 +1,37 @@
+let queensPlaced = 0;
+let totalQueens = 0;
+
 $(document).ready(function () {
     $('#startButton').click(function () {
         const size = parseInt($('#sizeInput').val());
         if (size && size > 0) {
-            drawBoard(size);
+            window.location.href = `game.html?size=${size}`;
         } else {
             alert('Please enter a valid number');
         }
+    });
+});
+
+$(document).ready(function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sizeParamExists = urlParams.has('size');
+    
+    if (sizeParamExists) {
+        const size = parseInt(urlParams.get('size'));
+        if (size && size > 0) {
+            queensPlaced = 0;
+            totalQueens = size;
+            drawBoard(size);
+            updateQueenCounter();
+        } else {
+            alert('Invalid number of queens');
+        }
+    }
+
+    $('#resetButton').click(function () {
+        queensPlaced = 0;
+        drawBoard(totalQueens);
+        updateQueenCounter();
     });
 });
 
@@ -33,6 +59,7 @@ function drawBoard(size) {
 function placeQueen(cell, size) {
     if (cell.hasClass('queen')) {
         cell.removeClass('queen').text('');
+        queensPlaced--;
         resetInvalidCells(size);
     } else {
         const row = parseInt(cell.attr('data-row'));
@@ -40,11 +67,14 @@ function placeQueen(cell, size) {
 
         if (isValidMove(row, col, size)) {
             cell.addClass('queen').text('♛');
+            queensPlaced++;
             highlightInvalidCells(row, col, size);
         } else {
             alert('Invalid move');
         }
     }
+    updateQueenCounter();
+    checkWin();
 }
 
 function isValidMove(row, col, size) {
@@ -80,4 +110,17 @@ function resetInvalidCells(size) {
         const col = parseInt($(this).attr('data-col'));
         highlightInvalidCells(row, col, size);
     });
+}
+
+function updateQueenCounter() {
+    const counterText = `${queensPlaced} queens have been placed from ${totalQueens} queens`;
+    $('#queenCounter').text(counterText);
+}
+
+function checkWin() {
+    if (queensPlaced === totalQueens) {
+        setTimeout(() => {
+            alert('You win!');
+        }, 300);
+    }
 }
