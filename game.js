@@ -1,7 +1,12 @@
 let queensPlaced = 0;
 let totalQueens = 0;
+let solutions = [];
+let currentSolutionIndex = 0;
 
 $(document).ready(function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sizeParamExists = urlParams.has('size');
+
     $('#startButton').click(function () {
         const size = parseInt($('#sizeInput').val());
         if (size && size > 0) {
@@ -10,12 +15,6 @@ $(document).ready(function () {
             alert('Please enter a valid number');
         }
     });
-});
-
-$(document).ready(function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const sizeParamExists = urlParams.has('size');
-    
     if (sizeParamExists) {
         const size = parseInt(urlParams.get('size'));
         if (size && size > 0) {
@@ -32,6 +31,10 @@ $(document).ready(function () {
         queensPlaced = 0;
         drawBoard(totalQueens);
         updateQueenCounter();
+    });
+
+    $('#giveUpButton').click(function () {
+        solveGame();
     });
 });
 
@@ -122,5 +125,81 @@ function checkWin() {
         setTimeout(() => {
             alert('You win!');
         }, 300);
+    }
+}
+
+function solveGame() {
+    const size = totalQueens;
+    const initialQueens = getInitialQueens(size);
+    solveNQueens(size, initialQueens);
+}
+
+function getInitialQueens(size) {
+    const initialQueens = new Array(size).fill(-1);
+    $('.cell.queen').each(function () {
+        const row = parseInt($(this).attr('data-row'));
+        const col = parseInt($(this).attr('data-col'));
+        initialQueens[row] = col;
+    });
+    return initialQueens;
+}
+
+function solveNQueens(n, initialQueens) {
+    solutions = [];
+    currentSolutionIndex = 0;
+    placeQueens(initialQueens, 0, n);
+    if (solutions.length > 0) {
+        showSolution();
+    } else {
+        alert('No solution found with the current placement. Please reset and try again.');
+    }
+}
+
+function placeQueens(board, row, n) {
+    if (row === n) {
+        solutions.push(board.slice());
+        return;
+    }
+    if (board[row] !== -1) {
+        placeQueens(board, row + 1, n);
+        return;
+    }
+    for (let col = 0; col < n; col++) {
+        if (isSafe(board, row, col)) {
+            board[row] = col;
+            placeQueens(board, row + 1, n);
+            board[row] = -1;
+        }
+    }
+}
+
+function isSafe(board, row, col) {
+    for (let i = 0; i < row; i++) {
+        const placedCol = board[i];
+        if (placedCol === col || placedCol - col === row - i || placedCol - col === i - row) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function showSolution() {
+    const solution = solutions[currentSolutionIndex];
+    animateSolution(solution);
+    currentSolutionIndex = (currentSolutionIndex + 1) % solutions.length;
+}
+
+function animateSolution(solution) {
+    const size = solution.length;
+    let delay = 0;
+    $('.cell').removeClass('queen').text('');
+    for (let i = 0; i < size; i++) {
+        const col = solution[i];
+        setTimeout(() => {
+            $(`.cell[data-row=${i}][data-col=${col}]`).addClass('queen').text('♛').css('background-color', 'orange');
+            queensPlaced = i + 1;
+            updateQueenCounter();
+        }, delay);
+        delay += 500;
     }
 }

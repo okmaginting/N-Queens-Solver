@@ -22,15 +22,27 @@ function displaySolution() {
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
             const cell = $('<div>').addClass('cell').addClass((i + j) % 2 === 0 ? 'white' : 'black');
-            if (solution[i] === j) {
-                cell.addClass('queen').text('♛');
-            }
+            cell.attr('data-row', i);
+            cell.attr('data-col', j);
             board.append(cell);
         }
     }
 
     boardContainer.append(board);
     $('#solutionNumber').text(`Solution number ${currentSolution + 1} of ${solutions.length}`);
+    animateSolution(solution);
+}
+
+function animateSolution(solution) {
+    const n = solution.length;
+    let delay = 0;
+    for (let i = 0; i < n; i++) {
+        const col = solution[i];
+        setTimeout(() => {
+            $(`.cell[data-row=${i}][data-col=${col}]`).addClass('queen').text('♛').css('background-color', 'orange');
+        }, delay);
+        delay += 500;
+    }
 }
 
 function prevSolution() {

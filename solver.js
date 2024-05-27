@@ -1,5 +1,5 @@
 let solutions = [];
-let currentSolution = 0;
+let currentSolutionIndex = 0;
 
 $(document).ready(function () {
     $('#solveButton').click(function () {
@@ -13,25 +13,27 @@ $(document).ready(function () {
     });
 });
 
-
-function solveNQueens(n) {
+function solveNQueens(n, initialQueens = []) {
     solutions = [];
-    currentSolution = 0;
-    const board = new Array(n).fill(-1);
-    placeQueens(board, 0);
+    currentSolutionIndex = 0;
+    const board = initialQueens.length > 0 ? initialQueens : new Array(n).fill(-1);
+    placeQueens(board, 0, n);
     localStorage.setItem('solutions', JSON.stringify(solutions));
 }
 
-function placeQueens(board, row) {
-    const n = board.length;
+function placeQueens(board, row, n) {
     if (row === n) {
         solutions.push(board.slice());
+        return;
+    }
+    if (board[row] !== -1) {
+        placeQueens(board, row + 1, n);
         return;
     }
     for (let col = 0; col < n; col++) {
         if (isSafe(board, row, col)) {
             board[row] = col;
-            placeQueens(board, row + 1);
+            placeQueens(board, row + 1, n);
             board[row] = -1;
         }
     }
