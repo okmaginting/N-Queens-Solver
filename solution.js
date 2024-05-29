@@ -39,7 +39,7 @@ function animateSolution(solution) {
     for (let i = 0; i < n; i++) {
         const col = solution[i];
         setTimeout(() => {
-            $(`.cell[data-row=${i}][data-col=${col}]`).addClass('queen').text('♛').css('background-color', 'orange');
+            $(`.cell[data-row=${i}][data-col=${col}]`).addClass('queen').text('♛').css('background-color', 'red');
         }, delay);
         delay += 500;
     }

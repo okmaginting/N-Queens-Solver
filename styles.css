@@ -20,10 +20,10 @@
     color: #fff;
 }
 .cell.invalid.white {
-    background-color: #9ecdff !important;
+    background-color: #94d1ff !important;
 }
 .cell.invalid.black {
-    background-color: #233e5c !important;
+    background-color: #10354d !important;
 }
 .queen {
     
@@ -32,7 +32,7 @@
 
 body {
     font-family: 'Copperplate', sans-serif;
-    background: #303030;
+    background: #727272;
     font-family: Orbitron, sans-serif;
 }
 
@@ -42,7 +42,7 @@ body {
     max-height: fit-content;
     margin: 0 auto;
     padding: 40px;
-    background-color: #ffffff;
+    background-color: #d1d1d1;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -68,3 +68,4 @@ h1 {
 .menu-item a:hover {
     background-color: #303030;
 }
+

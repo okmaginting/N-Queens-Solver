@@ -196,7 +196,7 @@ function animateSolution(solution) {
     for (let i = 0; i < size; i++) {
         const col = solution[i];
         setTimeout(() => {
-            $(`.cell[data-row=${i}][data-col=${col}]`).addClass('queen').text('♛').css('background-color', 'orange');
+            $(`.cell[data-row=${i}][data-col=${col}]`).addClass('queen').text('♛').css('background-color', 'red');
             queensPlaced = i + 1;
             updateQueenCounter();
         }, delay);
