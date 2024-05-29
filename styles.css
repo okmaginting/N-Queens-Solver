@@ -31,9 +31,9 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: rgb(2,0,36);
-    background: linear-gradient(135deg, rgba(2,0,36,1) 0%, rgba(9,48,121,1) 42%, rgba(0,212,255,1) 100%);
+    font-family: 'Copperplate', sans-serif;
+    background: #303030;
+    font-family: Orbitron, sans-serif;
 }
 
 .container {
@@ -43,7 +43,6 @@ body {
     margin: 0 auto;
     padding: 40px;
     background-color: #ffffff;
-    border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -59,14 +58,13 @@ h1 {
 .menu-item a {
     display: block;
     padding: 20px;
-    background-color: #007bff;
+    background-color: #212121;
     color: #ffffff;
     text-align: center;
     text-decoration: none;
-    border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 .menu-item a:hover {
-    background-color: #0056b3;
+    background-color: #303030;
 }
