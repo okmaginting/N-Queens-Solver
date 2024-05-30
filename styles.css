@@ -69,3 +69,6 @@ h1 {
     background-color: #303030;
 }
 
+.processing {
+    background-color: yellow !important;
+}

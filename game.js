@@ -71,7 +71,7 @@ function placeQueen(cell, size) {
         if (isValidMove(row, col, size)) {
             cell.addClass('queen').text('♛');
             queensPlaced++;
-            highlightInvalidCells(row, col, size);
+            resetInvalidCells(size);
         } else {
             alert('Invalid move');
         }
@@ -93,6 +93,15 @@ function isValidMove(row, col, size) {
     return true;
 }
 
+function resetInvalidCells(size) {
+    $('.cell').removeClass('invalid');
+    $('.queen').each(function () {
+        const row = parseInt($(this).attr('data-row'));
+        const col = parseInt($(this).attr('data-col'));
+        highlightInvalidCells(row, col, size);
+    });
+}
+
 function highlightInvalidCells(row, col, size) {
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
@@ -104,15 +113,6 @@ function highlightInvalidCells(row, col, size) {
             }
         }
     }
-}
-
-function resetInvalidCells(size) {
-    $('.cell').removeClass('invalid');
-    $('.queen').each(function () {
-        const row = parseInt($(this).attr('data-row'));
-        const col = parseInt($(this).attr('data-col'));
-        highlightInvalidCells(row, col, size);
-    });
 }
 
 function updateQueenCounter() {
@@ -167,6 +167,7 @@ function placeQueens(board, row, n) {
     for (let col = 0; col < n; col++) {
         if (isSafe(board, row, col)) {
             board[row] = col;
+            highlightCurrentCell(row, col, n);
             placeQueens(board, row + 1, n);
             board[row] = -1;
         }
@@ -181,6 +182,13 @@ function isSafe(board, row, col) {
         }
     }
     return true;
+}
+
+function highlightCurrentCell(row, col, size) {
+    $(`.cell[data-row=${row}][data-col=${col}]`).addClass('processing');
+    setTimeout(() => {
+        $(`.cell[data-row=${row}][data-col=${col}]`).removeClass('processing');
+    }, 500);
 }
 
 function showSolution() {
